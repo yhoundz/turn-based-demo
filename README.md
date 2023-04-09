@@ -1,2 +1,3 @@
 # Turn-Based combat Demo
-This is currently a work in progress
+- Currently WIP
+- Will not turn into a full game
