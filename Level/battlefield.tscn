@@ -48,3 +48,5 @@ speed = 6
 hp = 14
 def = 4
 speed = 13
+
+[connection signal="player_attacked" from="." to="Players/Warrior" method="attack"]

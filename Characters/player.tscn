@@ -4,10 +4,3 @@
 
 [node name="Player" type="Node2D" groups=["player"]]
 script = ExtResource("1_ul1sb")
-hp = null
-atk = null
-critChance = null
-critMult = null
-def = null
-defMult = null
-speed = null
