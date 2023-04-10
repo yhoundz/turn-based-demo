@@ -3,6 +3,9 @@ class_name player
 
 enum state {attack, ability, defend, item, idle, dead, damaged}
 
+var currState: state = state.idle
+var returnCurrStateName: String = get_state_name(currState)
+
 @export var hp: int = 20
 @export var atk: int = 10
 @export var critChance: float = 0.05
@@ -11,15 +14,18 @@ enum state {attack, ability, defend, item, idle, dead, damaged}
 @export var defMult: float = 2.0
 @export var speed: int = 10
 
-var currState: state
-
 func _ready() -> void:
 	currState = state.idle
+	var callable = Callable(self, "deff")
+	#get_node(self).connect(self.name, callable)
+	
+func deff():
+	pass
 
 func _process(delta: float) -> void:
 	match currState:
 		state.attack:
-			attack("", round(randf_range(1 - 0.15, 1 + 0.15) * atk))
+			attack()
 		state.ability:
 			ability()
 		state.defend:
@@ -31,9 +37,9 @@ func _process(delta: float) -> void:
 		state.dead:
 			dead()
 		state.damaged:
-			receiveDamage()
+			receive_damage()
 
-func attack(target: String, damage: int) -> void:
+func attack() -> void:
 	pass
 
 func ability() -> void:
@@ -52,7 +58,15 @@ func turn() -> void:
 func dead() -> void:
 	pass
 
-func receiveDamage() -> void:
+func receive_damage() -> void:
 	if(hp <= 0):
 		hp = 0
-		state.dead
+		currState = state.dead
+
+func get_state_name(stateName) -> String:
+	return state.find_key(stateName)
+
+func set_state(state) -> void:
+	currState = state
+	
+
