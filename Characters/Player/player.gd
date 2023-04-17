@@ -13,11 +13,10 @@ enum state {attack, ability, defend, item, idle, dead}
 
 var currState: state = state.idle
 var returnCurrStateName: String = state.find_key(currState)
-var lastMove: state
+var defendActive: bool = false
 
 func _ready() -> void:
 	currState = state.idle
-	lastMove = currState
 
 func _process(delta: float) -> void:
 	pass
@@ -30,17 +29,23 @@ func attack(target: Node) -> void:
 func ability() -> void:
 	pass
 
-func defend() -> void:
+func defend() -> int:
 	var originalDef = def
 	def *= defMult
+	defendActive = true
+	return originalDef
 
 func useItem() -> void:
 	pass
 
-func receive_damage() -> void:
+func receive_damage(damage: int) -> void:
+	hp -= damage
 	if(hp <= 0):
 		hp = 0
 		currState = state.dead
+	if(defendActive):
+		def = defend()
+		defendActive = false
 
 func set_state(setState) -> void:
 	currState = setState

@@ -1,52 +1,23 @@
 [gd_scene load_steps=4 format=3 uid="uid://gsssro4bqh1p"]
 
 [ext_resource type="Script" path="res://Level/battlefield.gd" id="1_og5ro"]
-[ext_resource type="PackedScene" uid="uid://x8s4m2xs7nb7" path="res://Characters/player.tscn" id="2_hht3b"]
-[ext_resource type="PackedScene" uid="uid://bulq5sq7pxs5o" path="res://Characters/enemy.tscn" id="3_1mo7g"]
+[ext_resource type="PackedScene" uid="uid://x8s4m2xs7nb7" path="res://Characters/Player/player.tscn" id="2_q6kg7"]
+[ext_resource type="PackedScene" uid="uid://bulq5sq7pxs5o" path="res://Characters/Enemies/enemy.tscn" id="3_hqc11"]
 
 [node name="Battlefield" type="Node2D"]
 script = ExtResource("1_og5ro")
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="Warrior" parent="Players" instance=ExtResource("2_hht3b")]
-hp = 18
-atk = 12
-def = 7
-
-[node name="Mage" parent="Players" instance=ExtResource("2_hht3b")]
-hp = 12
-atk = 14
-def = 4
-speed = 14
-
-[node name="Tank" parent="Players" instance=ExtResource("2_hht3b")]
-hp = 24
-atk = 6
-def = 11
-speed = 6
-
-[node name="Healer" parent="Players" instance=ExtResource("2_hht3b")]
-atk = 7
-def = 8
+[node name="Player" parent="Players" instance=ExtResource("2_q6kg7")]
 speed = 8
+
+[node name="Player2" parent="Players" instance=ExtResource("2_q6kg7")]
+speed = 12
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="enemy" parent="Enemies" instance=ExtResource("3_1mo7g")]
-hp = 17
-atk = 12
-def = 6
+[node name="enemy" parent="Enemies" instance=ExtResource("3_hqc11")]
 
-[node name="enemy2" parent="Enemies" instance=ExtResource("3_1mo7g")]
-hp = 16
-atk = 14
-def = 6
-speed = 6
-
-[node name="enemy3" parent="Enemies" instance=ExtResource("3_1mo7g")]
-hp = 14
-def = 4
+[node name="enemy2" parent="Enemies" instance=ExtResource("3_hqc11")]
 speed = 13
-
-[connection signal="player_attacked" from="." to="Players/Warrior" method="attack"]

@@ -1,7 +1,7 @@
 extends Node2D
 class_name enemy
 
-enum state {attack, ability, idle, dead, damaged}
+enum state {attack, ability, idle, dead}
 
 @export var hp: int = 20
 @export var atk: int = 10
@@ -15,24 +15,15 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	currState = decide()
-	match currState:
-		state.attack:
-			pass
-		state.ability:
-			pass
-		state.idle:
-			decide()
-		state.dead:
-			pass
-		state.damaged:
-			pass
+	pass
 
 func decide() -> state:
 	return state.attack
 
-func attack() -> void:
-	pass
+func attack(target: Node) -> void:
+	if target.is_in_group("player"):
+		target.receive_damage(round(randf_range(0.85, 1.15) * atk))
+		print(target.hp, target)
 
 func set_state(state) -> void:
 	currState = state

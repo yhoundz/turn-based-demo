@@ -2,8 +2,6 @@ extends Node2D
 
 enum battleState {playerTurn, enemyTurn, victory, defeat}
 
-signal player_attacked(target:Node)
-
 var turnOrder: Array[Node]
 var playerList: Array[Node]
 var enemyList: Array[Node]
@@ -14,6 +12,7 @@ var targetEnemy: int = 0 #currently targeted enemy - player attacking
 var turnCounter: int = 0
 var turnNum: int = set_turn_num()
 var currState: battleState
+var lastTurn: battleState
 
 func _ready() -> void:
 	turn_sort()
@@ -40,7 +39,7 @@ func turn_sort() -> void:
 
 	#sort by speed (fast -> slow)
 	for i in range(1, len(turnOrder)):
-		var temp = turnOrder[i]
+		var temp:Node = turnOrder[i]
 		var j:int = i - 1
 		while j >= 0 and turnOrder[j].speed < temp.speed:
 			turnOrder[j + 1] = turnOrder[j]
@@ -62,46 +61,40 @@ func children_to_array(node: String, array: Array) -> void:
 
 func player_turn() -> void:
 	var selectedPlayer: Node = get_node(turnOrder[turnNum].get_path()) if return_is_player(get_node(turnOrder[turnNum].get_path())) else null
-	selectedPlayer.set_state(selectedPlayer.state.attack)
-	match selectedPlayer.state.find_key(selectedPlayer.currState):
-		"attack":
-			player_attacked.emit(get_node(enemyList[targetEnemy].get_path()))
-			selectedPlayer.set_state(selectedPlayer.state.idle)
-			print("player attacked")
-		"ability":
-			selectedPlayer.set_state(selectedPlayer.state.ability)
-		"defend":
-			selectedPlayer.defend()
-			selectedPlayer.set_state(selectedPlayer.state.idle)
-			print("player defended")
-		"item":
-			selectedPlayer.set_state(selectedPlayer.state.item)
-		"idle":
-			selectedPlayer.set_state(selectedPlayer.state.idle)
-		"dead":
+	selectedPlayer.set_state(selectedPlayer.state.idle)
+	
+	match selectedPlayer.currState:
+		selectedPlayer.state.attack:
+			selectedPlayer.attack(enemyList[targetEnemy])
+		selectedPlayer.state.ability:
 			pass
-		"damaged":
-			selectedPlayer.set_state(selectedPlayer.state.damaged)
-	selectedPlayer.lastMove = selectedPlayer.currState
+		selectedPlayer.state.defend:
+			selectedPlayer.defend()
+		selectedPlayer.state.item:
+			pass
+		selectedPlayer.state.idle:
+			pass
+		selectedPlayer.state.dead:
+			pass
+
+	lastTurn = battleState.playerTurn
 	end_turn()
 
 func enemy_turn() -> void:
 	var selectedEnemy: Node = get_node(turnOrder[turnNum].get_path()) if not return_is_player(get_node(turnOrder[turnNum].get_path())) else null
 	selectedEnemy.set_state(selectedEnemy.state.idle)
-	match selectedEnemy.state.find_key(selectedEnemy.currState):
-		"attack":
-			player_attacked.emit(get_node(playerList[targetPlayer].get_path()))
-			selectedEnemy.set_state(selectedEnemy.state.idle)
-			print("enemy attacked")
-			end_turn()
-		"ability":
-			selectedEnemy.set_state(selectedEnemy.state.ability)
-		"idle":
-			selectedEnemy.set_state(selectedEnemy.state.idle)
-		"dead":
-			end_turn()
-		"damaged":
-			selectedEnemy.set_state(selectedEnemy.state.damaged)
+	
+	match selectedEnemy.currState:
+		selectedEnemy.state.attack:
+			pass
+		selectedEnemy.state.ability:
+			pass
+		selectedEnemy.state.idle:
+			selectedEnemy.decide()
+		selectedEnemy.state.dead:
+			pass
+	
+	lastTurn = battleState.enemyTurn
 
 func end_turn() -> void:
 	turnCounter += 1
