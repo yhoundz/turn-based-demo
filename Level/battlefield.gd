@@ -63,34 +63,32 @@ func player_turn() -> void:
 	var selectedPlayer: Node = get_node(turnOrder[turnNum].get_path()) if return_is_player(get_node(turnOrder[turnNum].get_path())) else null
 	selectedPlayer.set_state(selectedPlayer.state.idle)
 	
-	match selectedPlayer.currState:
-		selectedPlayer.state.attack:
-			selectedPlayer.attack(enemyList[targetEnemy])
-		selectedPlayer.state.ability:
-			pass
-		selectedPlayer.state.defend:
-			selectedPlayer.defend()
-		selectedPlayer.state.item:
-			pass
-		selectedPlayer.state.idle:
-			pass
-		selectedPlayer.state.dead:
-			pass
+	while(selectedPlayer.currState == selectedPlayer.currState.idle):
+		match selectedPlayer.currState:
+			selectedPlayer.state.attack:
+				selectedPlayer.attack(enemyList[targetEnemy])
+			selectedPlayer.state.ability:
+				pass
+			selectedPlayer.state.defend:
+				selectedPlayer.defend()
+			selectedPlayer.state.item:
+				pass
+			selectedPlayer.state.dead:
+				pass
 
 	lastTurn = battleState.playerTurn
 	end_turn()
 
 func enemy_turn() -> void:
 	var selectedEnemy: Node = get_node(turnOrder[turnNum].get_path()) if not return_is_player(get_node(turnOrder[turnNum].get_path())) else null
-	selectedEnemy.set_state(selectedEnemy.state.idle)
+	selectedEnemy.set_state(selectedEnemy.decide())
 	
 	match selectedEnemy.currState:
 		selectedEnemy.state.attack:
-			pass
+			selectedEnemy.attack(playerList[targetPlayer])
+			end_turn()
 		selectedEnemy.state.ability:
 			pass
-		selectedEnemy.state.idle:
-			selectedEnemy.decide()
 		selectedEnemy.state.dead:
 			pass
 	

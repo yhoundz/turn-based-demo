@@ -10,14 +10,18 @@ script = ExtResource("1_og5ro")
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Player" parent="Players" instance=ExtResource("2_q6kg7")]
+position = Vector2(206, 433)
 speed = 8
 
 [node name="Player2" parent="Players" instance=ExtResource("2_q6kg7")]
+position = Vector2(583, 431)
 speed = 12
 
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="enemy" parent="Enemies" instance=ExtResource("3_hqc11")]
+position = Vector2(573, 119)
 
 [node name="enemy2" parent="Enemies" instance=ExtResource("3_hqc11")]
+position = Vector2(213, 118)
 speed = 13

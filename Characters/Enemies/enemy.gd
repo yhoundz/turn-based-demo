@@ -1,14 +1,14 @@
 extends Node2D
 class_name enemy
 
-enum state {attack, ability, idle, dead}
+enum state {attack, ability, dead}
 
 @export var hp: int = 20
 @export var atk: int = 10
 @export var def: int = 10
 @export var speed: int = 10
 
-var currState: state = state.idle
+var currState: state
 var returnCurrStateName: String = state.find_key(currState)
 
 func _ready() -> void:
