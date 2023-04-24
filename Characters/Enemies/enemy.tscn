@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bulq5sq7pxs5o"]
+[gd_scene load_steps=4 format=3 uid="uid://bulq5sq7pxs5o"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/enemy.gd" id="1_00km1"]
 [ext_resource type="Texture2D" uid="uid://s1se71oysscy" path="res://icon.svg" id="2_f37jw"]
+[ext_resource type="PackedScene" uid="uid://cy3m5327icwjr" path="res://Characters/characterInfo.tscn" id="3_7psuv"]
 
 [node name="enemy" type="Node2D" groups=["enemy"]]
 script = ExtResource("1_00km1")
@@ -10,3 +11,9 @@ script = ExtResource("1_00km1")
 modulate = Color(1, 0.447059, 0.34902, 1)
 position = Vector2(64, 64)
 texture = ExtResource("2_f37jw")
+
+[node name="characterInfo" parent="." instance=ExtResource("3_7psuv")]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 65.0
+offset_bottom = 87.0

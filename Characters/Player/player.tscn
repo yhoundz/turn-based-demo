@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://x8s4m2xs7nb7"]
+[gd_scene load_steps=4 format=3 uid="uid://x8s4m2xs7nb7"]
 
 [ext_resource type="Script" path="res://Characters/Player/player.gd" id="1_3ci7t"]
 [ext_resource type="Texture2D" uid="uid://s1se71oysscy" path="res://icon.svg" id="2_ypagf"]
+[ext_resource type="PackedScene" uid="uid://cy3m5327icwjr" path="res://Characters/characterInfo.tscn" id="3_ewcu0"]
 
 [node name="Player" type="Node2D" groups=["player"]]
 script = ExtResource("1_3ci7t")
@@ -10,3 +11,5 @@ script = ExtResource("1_3ci7t")
 modulate = Color(0, 1, 0, 1)
 position = Vector2(64, 64)
 texture = ExtResource("2_ypagf")
+
+[node name="characterInfo" parent="." instance=ExtResource("3_ewcu0")]

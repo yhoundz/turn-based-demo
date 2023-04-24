@@ -61,9 +61,13 @@ func children_to_array(node: String, array: Array) -> void:
 
 func player_turn() -> void:
 	var selectedPlayer: Node = get_node(turnOrder[turnNum].get_path()) if return_is_player(get_node(turnOrder[turnNum].get_path())) else null
-	selectedPlayer.set_state(selectedPlayer.state.idle)
+	if(selectedPlayer.isDead):
+		pass
+	else:
+		selectedPlayer.set_state(selectedPlayer.state.idle)
 	
-	while(selectedPlayer.currState == selectedPlayer.currState.idle):
+	while(selectedPlayer.currState == selectedPlayer.state.idle):
+		selectedPlayer.set_state(selectedPlayer.state.attack)
 		match selectedPlayer.currState:
 			selectedPlayer.state.attack:
 				selectedPlayer.attack(enemyList[targetEnemy])
@@ -74,6 +78,7 @@ func player_turn() -> void:
 			selectedPlayer.state.item:
 				pass
 			selectedPlayer.state.dead:
+				selectedPlayer.isDead = true
 				pass
 
 	lastTurn = battleState.playerTurn
@@ -81,6 +86,7 @@ func player_turn() -> void:
 
 func enemy_turn() -> void:
 	var selectedEnemy: Node = get_node(turnOrder[turnNum].get_path()) if not return_is_player(get_node(turnOrder[turnNum].get_path())) else null
+	targetPlayer = selectedEnemy.roll_player(playerList)
 	selectedEnemy.set_state(selectedEnemy.decide())
 	
 	match selectedEnemy.currState:
