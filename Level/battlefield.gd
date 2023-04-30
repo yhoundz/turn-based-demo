@@ -62,7 +62,7 @@ func children_to_array(node: String, array: Array) -> void:
 func player_turn() -> void:
 	var selectedPlayer: Node = get_node(turnOrder[turnNum].get_path()) if return_is_player(get_node(turnOrder[turnNum].get_path())) else null
 	if(selectedPlayer.isDead):
-		pass
+		return
 	else:
 		selectedPlayer.set_state(selectedPlayer.state.idle)
 	
