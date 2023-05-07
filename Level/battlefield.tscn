@@ -34,21 +34,58 @@ offset_left = 14.0
 offset_top = 505.0
 offset_right = 54.0
 offset_bottom = 545.0
+id = "attack"
+
+[node name="Label" parent="UI/Attack" index="0"]
+offset_left = 54.0
+offset_top = 558.0
+offset_right = 96.0
+offset_bottom = 584.0
+labelText = "attack"
 
 [node name="Ability" parent="UI" instance=ExtResource("4_4m30s")]
-offset_left = 168.0
-offset_top = 505.0
-offset_right = 208.0
-offset_bottom = 545.0
+offset_left = 164.0
+offset_top = 504.0
+offset_right = 292.0
+offset_bottom = 632.0
+id = "ability"
+
+[node name="Label" parent="UI/Ability" index="0"]
+offset_left = 205.0
+offset_top = 556.0
+offset_right = 247.0
+offset_bottom = 582.0
+labelText = "ability"
 
 [node name="Item" parent="UI" instance=ExtResource("4_4m30s")]
 offset_left = 316.0
 offset_top = 505.0
 offset_right = 356.0
 offset_bottom = 545.0
+id = "item"
+
+[node name="Label" parent="UI/Item" index="0"]
+offset_left = 356.0
+offset_top = 560.0
+offset_right = 398.0
+offset_bottom = 586.0
+labelText = "item"
 
 [node name="Defend" parent="UI" instance=ExtResource("4_4m30s")]
 offset_left = 467.0
 offset_top = 506.0
 offset_right = 507.0
 offset_bottom = 546.0
+id = "defend"
+
+[node name="Label" parent="UI/Defend" index="0"]
+offset_left = 506.0
+offset_top = 565.0
+offset_right = 548.0
+offset_bottom = 591.0
+labelText = "defend"
+
+[editable path="UI/Attack"]
+[editable path="UI/Ability"]
+[editable path="UI/Item"]
+[editable path="UI/Defend"]

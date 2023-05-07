@@ -51,3 +51,7 @@ func receive_damage(damage: int) -> void:
 
 func set_state(setState) -> void:
 	currState = setState
+
+func is_alive() -> bool:
+	return !isDead
+	

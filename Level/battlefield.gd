@@ -4,6 +4,7 @@ enum battleState {playerTurn, enemyTurn, victory, defeat}
 
 var turnOrder: Array[Node]
 var playerList: Array[Node]
+var alivePlayers: Array[Node]
 var enemyList: Array[Node]
 var currPlayer: int = 0 #currently selected player
 var currEnemy: int = 0 #currently acting enemy
@@ -19,6 +20,7 @@ func _ready() -> void:
 	currState = set_curr_state()
 	children_to_array("Players", playerList)
 	children_to_array("Enemies", enemyList)
+	children_to_array("Players", alivePlayers)
 	print(turnOrder, turnNum)
 
 func _process(delta: float) -> void:
@@ -79,6 +81,7 @@ func player_turn() -> void:
 				pass
 			selectedPlayer.state.dead:
 				selectedPlayer.isDead = true
+				alivePlayers = alivePlayers.filter(check_alive(selectedPlayer))
 				pass
 
 	lastTurn = battleState.playerTurn
@@ -118,3 +121,7 @@ func set_curr_state() -> battleState:
 
 func return_is_player(inNode: Node) -> bool:
 	return inNode is player
+
+#why tf cant callables have typed returns
+func check_alive(char: Node): #-> bool
+	return char.is_alive()
