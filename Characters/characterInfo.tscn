@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy3m5327icwjr"]
+
+[ext_resource type="Script" path="res://Characters/characterInfo.gd" id="1_nmxsp"]
+
+[node name="characterInfo" type="Label"]
+script = ExtResource("1_nmxsp")

@@ -12,7 +12,6 @@ enum state {attack, ability, defend, item, idle, dead}
 @export var speed: int = 10
 
 var currState: state = state.idle
-var returnCurrStateName: String = state.find_key(currState)
 var defendActive: bool = false
 var isDead: bool = false
 
@@ -54,4 +53,12 @@ func set_state(setState) -> void:
 
 func is_alive() -> bool:
 	return !isDead
-	
+
+func return_curr_state_name() -> String:
+	return state.find_key(currState)
+
+func return_state_from_string(str: String) -> int:
+	for i in state.keys():
+		if state.find_key(i) == str:
+			return i
+	return -1

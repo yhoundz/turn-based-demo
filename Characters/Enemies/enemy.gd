@@ -10,7 +10,6 @@ enum state {attack, ability, dead}
 
 var isDead: bool = false
 var currState: state
-var returnCurrStateName: String = state.find_key(currState)
 
 func _ready() -> void:
 	pass
@@ -24,7 +23,6 @@ func decide() -> state:
 func attack(target: Node) -> void:
 	if target.is_in_group("player"):
 		target.receive_damage(round(randf_range(0.85, 1.15) * atk))
-		print(target.hp, target)
 
 func set_state(state) -> void:
 	currState = state
@@ -37,7 +35,10 @@ func receive_damage(damage: int) -> void:
 	get_node("characterInfo").set_info()
 
 func roll_player(arr: Array) -> int:
-	var i: int = randi() % len(arr)
-	while(arr[i].isDead):
-		i = randi() % len(arr)
-	return i
+	return randi() % len(arr)
+
+func is_alive() -> bool:
+	return !isDead
+
+func return_curr_state_name() -> String:
+	return state.find_key(currState)
