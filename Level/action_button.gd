@@ -11,7 +11,7 @@ func _process(delta: float) -> void:
 
 func _on_pressed():
 	if battlefield.get_active_state() == "player":
-		match self.id:
+		match id:
 			"attack":
 				battlefield.set_player_state(battlefield.get_curr_char(), "attack")
 				print("pressed attack")

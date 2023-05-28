@@ -12,12 +12,13 @@ var currEnemy: int = 0 #currently acting enemy
 var targetPlayer: int = 0 #currently targeted player - enemy attacking
 var targetEnemy: int = 0 #currently targeted enemy - player attacking
 var turnCounter: int = 0
-var turnNum: int = set_turn_num()
+var turnNum: int 
 var currState: battleState
 var lastTurn: battleState
 var advanceGame: bool = false
 
 func _ready() -> void:
+	turnNum = set_turn_num()
 	turn_sort()
 	set_curr_state()
 	children_to_array("Players", playerList)
@@ -77,21 +78,24 @@ func player_turn() -> void:
 	else:
 		selectedPlayer.set_state(selectedPlayer.state.idle)
 	
-	
-	
-	match selectedPlayer.currState:
-		selectedPlayer.state.attack:
-			selectedPlayer.attack(aliveEnemies[targetEnemy])
-			pass
-		selectedPlayer.state.ability:
-			pass
-		selectedPlayer.state.defend:
-			selectedPlayer.defend()
-		selectedPlayer.state.item:
-			pass
-		selectedPlayer.state.dead:
-			selectedPlayer.isDead = true
-			alivePlayers = alivePlayers.filter(check_alive(selectedPlayer))
+	#find user input here to decide currState
+	while true:
+		print(selectedPlayer.currState)
+		match selectedPlayer.currState:
+			selectedPlayer.state.attack:
+				selectedPlayer.attack(aliveEnemies[targetEnemy])
+				pass
+			selectedPlayer.state.ability:
+				pass
+			selectedPlayer.state.defend:
+				selectedPlayer.defend()
+			selectedPlayer.state.item:
+				pass
+			selectedPlayer.state.dead:
+				selectedPlayer.isDead = true
+				alivePlayers = alivePlayers.filter(check_alive(selectedPlayer))
+			_:
+				continue
 
 	lastTurn = battleState.playerTurn
 	end_turn()

@@ -4,6 +4,3 @@ extends Label
 
 func _ready() -> void:
 	set_text(labelText)
-
-func _process(delta: float) -> void:
-	pass

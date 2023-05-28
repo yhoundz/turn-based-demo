@@ -22,9 +22,11 @@ speed = 12
 
 [node name="enemy" parent="Enemies" instance=ExtResource("3_hqc11")]
 position = Vector2(574, 79)
+atk = 15
 
 [node name="enemy2" parent="Enemies" instance=ExtResource("3_hqc11")]
 position = Vector2(288, 79)
+atk = 15
 speed = 13
 
 [node name="UI" type="Node2D" parent="."]

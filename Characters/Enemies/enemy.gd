@@ -23,6 +23,7 @@ func decide() -> state:
 func attack(target: Node) -> void:
 	if target.is_in_group("player"):
 		target.receive_damage(round(randf_range(0.85, 1.15) * atk))
+		print(target, target.hp)
 
 func set_state(state) -> void:
 	currState = state
