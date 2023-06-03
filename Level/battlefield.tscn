@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Level/battlefield.gd" id="1_og5ro"]
 [ext_resource type="PackedScene" uid="uid://x8s4m2xs7nb7" path="res://Characters/Player/player.tscn" id="2_q6kg7"]
 [ext_resource type="PackedScene" uid="uid://bulq5sq7pxs5o" path="res://Characters/Enemies/enemy.tscn" id="3_hqc11"]
-[ext_resource type="PackedScene" uid="uid://b06om7q0qpyh0" path="res://Level/action_button.tscn" id="4_4m30s"]
+[ext_resource type="PackedScene" path="res://Level/action_button.tscn" id="4_4m30s"]
 
 [node name="Battlefield" type="Node2D"]
 script = ExtResource("1_og5ro")
@@ -34,8 +34,8 @@ speed = 13
 [node name="Attack" parent="UI" instance=ExtResource("4_4m30s")]
 offset_left = 14.0
 offset_top = 505.0
-offset_right = 54.0
-offset_bottom = 545.0
+offset_right = 142.0
+offset_bottom = 633.0
 id = "attack"
 
 [node name="Label" parent="UI/Attack" index="0"]

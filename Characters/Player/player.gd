@@ -43,12 +43,14 @@ func receive_damage(damage: int) -> void:
 	if(hp <= 0):
 		hp = 0
 		set_state(state.dead)
+		isDead = true
+		print("YOU DIED")
 	if(defendActive):
 		def = defend()
 		defendActive = false
 	get_node("characterInfo").set_info()
 
-func set_state(setState) -> void:
+func set_state(setState: state) -> void:
 	currState = setState
 
 func is_alive() -> bool:
@@ -59,6 +61,6 @@ func return_curr_state_name() -> String:
 
 func return_state_from_string(str: String) -> int:
 	for i in state.keys():
-		if state.find_key(i) == str:
-			return i
+		if i == str:
+			return state.get(i)
 	return -1

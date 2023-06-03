@@ -31,13 +31,15 @@ func _ready() -> void:
 
 func update() -> void:
 	set_curr_state()
+	advanceGame = false
+	aliveEnemies = aliveEnemies.filter(check_alive)
+	alivePlayers = alivePlayers.filter(check_alive)
 	match currState:
 		battleState.playerTurn:
 			player_turn()
 		battleState.enemyTurn:
 			enemy_turn()
 	turnNum = set_turn_num()
-	advanceGame = false
 
 func _process(delta: float) -> void:
 	if(advanceGame):
@@ -73,29 +75,46 @@ func children_to_array(node: String, array: Array) -> void:
 
 func player_turn() -> void:
 	var selectedPlayer: Node = get_node(turnOrder[turnNum].get_path()) if return_is_player(get_node(turnOrder[turnNum].get_path())) else null
-	if(selectedPlayer.isDead):
+	var inputReceived: bool = false
+	if(selectedPlayer.isDead or selectedPlayer == null):
 		end_turn()
 	else:
 		selectedPlayer.set_state(selectedPlayer.state.idle)
 	
+	var handlePlayerInput = func handle_player_input(id) -> bool:
+		if selectedPlayer.currState == selectedPlayer.state.idle:
+			inputReceived = true
+			set_player_state(selectedPlayer, id)
+			return true
+		return inputReceived
+	
+	for i in get_node("UI").get_children():
+		i.alertPlayerInput.connect(handlePlayerInput)
+		
+	while not inputReceived:
+		for i in get_node("UI").get_children():
+			await i.alertPlayerInput
+			print(i)
+			if(inputReceived):
+				print("dfgdf")
+				break
+		break
+	
 	#find user input here to decide currState
-	while true:
-		print(selectedPlayer.currState)
-		match selectedPlayer.currState:
-			selectedPlayer.state.attack:
-				selectedPlayer.attack(aliveEnemies[targetEnemy])
-				pass
-			selectedPlayer.state.ability:
-				pass
-			selectedPlayer.state.defend:
-				selectedPlayer.defend()
-			selectedPlayer.state.item:
-				pass
-			selectedPlayer.state.dead:
-				selectedPlayer.isDead = true
-				alivePlayers = alivePlayers.filter(check_alive(selectedPlayer))
-			_:
-				continue
+	match selectedPlayer.currState:
+		selectedPlayer.state.attack:
+			selectedPlayer.attack(aliveEnemies[targetEnemy])
+			pass
+		selectedPlayer.state.ability:
+			pass
+		selectedPlayer.state.defend:
+			selectedPlayer.defend()
+		selectedPlayer.state.item:
+			pass
+		selectedPlayer.state.dead:
+			selectedPlayer.isDead = true
+		_:
+			print("wow")
 
 	lastTurn = battleState.playerTurn
 	end_turn()
@@ -110,15 +129,14 @@ func enemy_turn() -> void:
 	
 	match selectedEnemy.currState:
 		selectedEnemy.state.attack:
-			print("sd")
 			selectedEnemy.attack(alivePlayers[targetPlayer])
 			pass
 		selectedEnemy.state.ability:
 			pass
 		selectedEnemy.state.dead:
 			selectedEnemy.isDead = true
-			aliveEnemies = aliveEnemies.filter(check_alive(selectedEnemy))
-	
+			aliveEnemies = aliveEnemies.filter(check_alive)
+
 	lastTurn = battleState.enemyTurn
 	end_turn()
 
